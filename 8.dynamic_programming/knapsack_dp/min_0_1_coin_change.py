@@ -10,20 +10,19 @@ def min_coin_change(coins, target):
     for i in range(n + 1):
         dp[i][0] = 0
 
-    # Fill the DP table
+    # Fill the DP table1
     for i in range(1, n + 1):
         for j in range(1, target + 1):
-            # Don't take the current coin
-            dp[i][j] = dp[i-1][j]
-
-            # Take the current coin (if possible)
+            # When the amount is greater than coin, Take the current coin (if possible)
             if j >= coins[i-1]:
-                dp[i][j] = min(dp[i][j], 1 + dp[i-1][j - coins[i-1]])
+                dp[i][j] = min(dp[i-1][j], 1 + dp[i-1][j - coins[i-1]])
+            else:
+                dp[i][j] = dp[i-1][j]
 
     return dp[n][target] if dp[n][target] != float('inf') else -1
 
 
 if __name__ == "__main__":
-    coins = [1,2,5]
-    target = 5
+    coins = [1,5]
+    target = 1
     print(min_coin_change(coins, target))
